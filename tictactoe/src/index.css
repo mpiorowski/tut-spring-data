@@ -18,6 +18,7 @@ ol, ul {
 }
 
 .square {
+    position: relative;
     background: #fff;
     border: 1px solid #999;
     float: left;
@@ -30,6 +31,47 @@ ol, ul {
     padding: 0;
     text-align: center;
     width: 34px;
+}
+
+.hor-line:after {
+position: absolute;
+left: 0;
+top: 50%;
+height: 2px;
+background: black;
+content: "";
+width: 100%;
+display: block;
+}
+
+.ver-line:after {
+position: absolute;
+left: 50%;
+top: 0;
+height: 100%;
+background: black;
+content: "";
+width: 2px;
+display: block;
+}
+
+.crossed-1 {
+    background: linear-gradient(to top left,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0) calc(50% - 0.8px),
+    rgba(0, 0, 0, 1) 50%,
+    rgba(0, 0, 0, 0) calc(50% + 0.8px),
+    rgba(0, 0, 0, 0) 100%);
+
+}
+
+.crossed-2 {
+    background: linear-gradient(to top right,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0) calc(50% - 0.8px),
+    rgba(0, 0, 0, 1) 50%,
+    rgba(0, 0, 0, 0) calc(50% + 0.8px),
+    rgba(0, 0, 0, 0) 100%);
 }
 
 .square:focus {

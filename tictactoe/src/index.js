@@ -23,9 +23,30 @@ function calculateWinner(squares) {
   return null;
 }
 
+function checkLines(squares) {
+  const lines = [
+    [0, 1, 2, 1],
+    [3, 4, 5, 1],
+    [6, 7, 8, 1],
+    [0, 3, 6, 2],
+    [1, 4, 7, 2],
+    [2, 5, 8, 2],
+    [0, 4, 8, 3],
+    [2, 4, 6, 4],
+  ];
+
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c, d] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return lines[i];
+    }
+  }
+  return [0,0,0,0];
+}
+
 function Square(props) {
   return (
-      <button className="square" onClick={props.onClick}>
+      <button className={props.className} onClick={props.onClick}>
         {props.value}
       </button>
   )
@@ -34,9 +55,28 @@ function Square(props) {
 class Board extends React.Component {
 
   renderSquare(i) {
+    let className;
+    let lines = this.props.linesSquare;
+    if (lines[0] === i || lines[1] === i || lines[2] === i)  {
+      if (lines[3] === 1) {
+        className = 'square hor-line';
+      } else if (lines[3] === 2) {
+        className = 'square ver-line';
+      } else if (lines[3] === 3) {
+        className = 'square crossed-2';
+      } else if (lines[3] === 4) {
+        className = 'square crossed-1';
+      } else {
+        className = 'square';
+      }
+    } else {
+      className = 'square';
+    }
     return (
         <Square
             value={this.props.squares[i]}
+            id={'square' + i}
+            className={className}
             onClick={() => this.props.onClick(i)}
         />
     )
@@ -87,7 +127,7 @@ class Game extends React.Component {
       xIsNext: (step % 2) === 0,
     })
   }
-  
+
   handleClick(i) {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
@@ -110,6 +150,7 @@ class Game extends React.Component {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
+    const lines = checkLines(current.squares);
 
     let status;
     if (winner) {
@@ -135,6 +176,7 @@ class Game extends React.Component {
             <Board
                 squares={current.squares}
                 onClick={(i) => this.handleClick(i)}
+                linesSquare={lines}
             />
           </div>
           <div className="game-info">
