@@ -168,7 +168,7 @@ class Game extends React.Component {
             <button onClick={() => this.jumpTo(move)}>{desc}</button>
           </li>
       )
-    })
+    });
 
     return (
         <div className="game">
@@ -192,5 +192,5 @@ class Game extends React.Component {
 ReactDOM.render(
     <Game/>,
     document.getElementById("root")
-)
+);
 
