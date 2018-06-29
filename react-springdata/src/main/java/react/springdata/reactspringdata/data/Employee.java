@@ -1,20 +1,28 @@
 package react.springdata.reactspringdata.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Version;
 
 @Data
 @Entity
 public class Employee {
-  private @Id
+
+  @Id
   @GeneratedValue
-  Long id;
+  private Long id;
+
   private String firstName;
   private String lastName;
   private String description;
+
+  @Version
+  @JsonIgnore
+  private Long version;
 
   private Employee() {
   }
