@@ -75,7 +75,7 @@ public class Manager {
 
   public Manager(String name, String password, String... roles) {
     this.name = name;
-    this.password = password;
+    this.password = PASSWORD_ENCODER.encode(password);
     this.roles = roles;
   }
 }
