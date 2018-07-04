@@ -51,10 +51,12 @@ public class AuthController {
   @PostMapping("/signin")
   public ResponseEntity authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-    Authentication authentication =
-        authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(
-                loginRequest.getUsernameOrEmail(), loginRequest.getPassword()));
+    Authentication authentication = authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(
+            loginRequest.getUsernameOrEmail(),
+            loginRequest.getPassword()
+        )
+    );
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
 

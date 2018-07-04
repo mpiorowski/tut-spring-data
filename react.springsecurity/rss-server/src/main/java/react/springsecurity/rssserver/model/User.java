@@ -18,7 +18,6 @@ import java.util.Set;
         @UniqueConstraint(columnNames = {"email"})
     })
 public class User extends DateAudit {
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -33,7 +32,7 @@ public class User extends DateAudit {
 
   @NaturalId
   @NotBlank
-  @Size(max = 15)
+  @Size(max = 40)
   @Email
   private String email;
 
@@ -46,38 +45,16 @@ public class User extends DateAudit {
       name = "user_roles",
       joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "role_id"))
-  private transient Set<Role> roles = new HashSet<>();
+  private Set<Role> roles = new HashSet<>();
 
-  public User(
-      @NotBlank @Size(max = 40) String name,
-      @NotBlank @Size(max = 40) String username,
-      @NotBlank @Size(max = 15) @Email String email,
-      @NotBlank @Size(max = 100) String password) {
+  public User() {
+  }
+
+  public User(String name, String username, String email, String password) {
     this.name = name;
     this.username = username;
     this.email = email;
     this.password = password;
-  }
-
-  public User(
-      @NotBlank @Size(max = 40) String name,
-      @NotBlank @Size(max = 40) String username,
-      @NotBlank @Size(max = 15) @Email String email,
-      @NotBlank @Size(max = 100) String password,
-      Set<Role> roles) {
-    this.name = name;
-    this.username = username;
-    this.email = email;
-    this.password = password;
-    this.roles = roles;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public Long getId() {
@@ -94,6 +71,14 @@ public class User extends DateAudit {
 
   public void setUsername(String username) {
     this.username = username;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
   public String getEmail() {
