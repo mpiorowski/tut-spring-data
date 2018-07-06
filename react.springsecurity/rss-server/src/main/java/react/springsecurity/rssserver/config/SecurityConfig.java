@@ -36,7 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   @Override
-  public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+  public void configure(AuthenticationManagerBuilder authenticationManagerBuilder)
+      throws Exception {
     authenticationManagerBuilder
         .userDetailsService(customUserDetailService)
         .passwordEncoder(passwordEncoder());
@@ -56,14 +57,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity httpSecurity) throws Exception {
     httpSecurity
-        .cors().and()
-        .csrf().disable()
-        .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+        .cors()
         .and()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .csrf()
+        .disable()
+        .exceptionHandling()
+        .authenticationEntryPoint(unauthorizedHandler)
+        .and()
+        .sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .authorizeRequests()
-        .antMatchers("/",
+        .antMatchers(
+            "/",
             "/favicon.ico",
             "/**/*.png",
             "/**/*.gif",
@@ -71,8 +77,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/**/*.jpg",
             "/**/*.html",
             "/**/*.css",
-            "/**/*.js").permitAll()
-        .antMatchers("/api/auth/**").permitAll()
+            "/**/*.js")
+        .permitAll()
+        .antMatchers("/api/auth/**")
+        .permitAll()
         .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
         .permitAll()
         .antMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**")
@@ -80,6 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .anyRequest()
         .authenticated();
 
-    httpSecurity.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+    httpSecurity.addFilterBefore(
+        jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
   }
 }

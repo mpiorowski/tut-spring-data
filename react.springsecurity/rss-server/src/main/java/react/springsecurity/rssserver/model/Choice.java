@@ -22,6 +22,10 @@ public class Choice implements Serializable {
   @JoinColumn(name = "poll_id", nullable = false)
   private Poll poll;
 
+  public Choice() {
+
+  }
+
   public Choice(String text) {
     this.text = text;
   }

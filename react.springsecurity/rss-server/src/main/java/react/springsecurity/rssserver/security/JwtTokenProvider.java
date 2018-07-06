@@ -21,6 +21,7 @@ public class JwtTokenProvider {
   private int jwtExpirationInMs;
 
   public String generateToken(Authentication authentication) {
+
     UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 
     Date now = new Date();
@@ -35,10 +36,7 @@ public class JwtTokenProvider {
   }
 
   public Long getUserIdFromJWT(String token) {
-    Claims claims = Jwts.parser()
-        .setSigningKey(jwtSecret)
-        .parseClaimsJws(token)
-        .getBody();
+    Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
 
     return Long.parseLong(claims.getSubject());
   }
@@ -46,6 +44,7 @@ public class JwtTokenProvider {
   public boolean validateToken(String authToken) {
     try {
       Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
+      return true;
     } catch (SignatureException ex) {
       logger.error("Invalid JWT signature");
     } catch (MalformedJwtException ex) {

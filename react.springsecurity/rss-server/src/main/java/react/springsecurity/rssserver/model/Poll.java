@@ -34,7 +34,7 @@ public class Poll extends UserDateAudit {
   @Size(min = 2, max = 6)
   @Fetch(FetchMode.SELECT)
   @BatchSize(size = 30)
-  private transient List<Choice> choices = new ArrayList<>();
+  private List<Choice> choices = new ArrayList<>();
 
   @NotNull
   private Instant expirationDateTime;
